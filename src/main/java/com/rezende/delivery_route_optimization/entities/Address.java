@@ -1,11 +1,16 @@
 package com.rezende.delivery_route_optimization.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Address {
 
     private String street;
     private String number;
     private String neighborhood;
     private String city;
+
+    private final List<Coordinates> coordinates = new ArrayList<>();
 
     public Address() { }
 
@@ -60,6 +65,10 @@ public class Address {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public List<Coordinates> getCoordinates() {
+        return coordinates;
     }
 
     @Override
