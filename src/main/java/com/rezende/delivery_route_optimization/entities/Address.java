@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Address {
 
+    private String id;
     private String street;
     private String number;
     private String neighborhood;
@@ -15,11 +16,13 @@ public class Address {
     public Address() { }
 
     private Address(
+            final String id,
             final String street,
             final String number,
             final String neighborhood,
             final String city
     ) {
+        this.id = id;
         this.street = street;
         this.number = number;
         this.neighborhood = neighborhood;
@@ -27,12 +30,21 @@ public class Address {
     }
 
     public static Address from(
+            final String id,
             final String street,
             final String number,
             final String neighborhood,
             final String city
     ) {
-        return new Address(street, number, neighborhood, city);
+        return new Address(id, street, number, neighborhood, city);
+    }
+
+    public static Address of(final Address address) {
+        return Address.from(address.id, address.street, address.number, address.neighborhood, address.city);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getStreet() {

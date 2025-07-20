@@ -2,14 +2,14 @@ package com.rezende.delivery_route_optimization.entities;
 
 public class Coordinates {
 
-    private Double latitude;
-    private Double Longitude;
 
+    private Double latitude;
+    private Double longitude;
     public Coordinates() { }
 
     private Coordinates(final Double latitude, final Double longitude) {
         this.latitude = latitude;
-        this.Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public static Coordinates from(final Double latitude, final Double longitude) {
@@ -25,18 +25,18 @@ public class Coordinates {
     }
 
     public Double getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(final Double longitude) {
-        Longitude = longitude;
+        this.longitude = longitude;
     }
 
     @Override
     public String toString() {
         return "Coordinates{" +
                 "latitude=" + latitude +
-                ", Longitude=" + Longitude +
+                ", Longitude=" + longitude +
                 '}';
     }
 }
