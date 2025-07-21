@@ -3,7 +3,7 @@ package com.rezende.delivery_route_optimization.dto;
 public class MetricDTO {
 
     private Double distanceTotalKm;
-    private Long timeTotalMinutes;
+    private Double timeTotalMinutes;
     private String unitDistance;
     private String unitTime;
 
@@ -11,7 +11,7 @@ public class MetricDTO {
 
     public MetricDTO(
             final Double distanceTotalKm,
-            final Long timeTotalMinutes,
+            final Double timeTotalMinutes,
             final String unitDistance,
             final String unitTime
     ) {
@@ -29,11 +29,11 @@ public class MetricDTO {
         this.distanceTotalKm = distanceTotalKm;
     }
 
-    public Long getTimeTotalMinutes() {
+    public Double getTimeTotalMinutes() {
         return timeTotalMinutes;
     }
 
-    public void setTimeTotalMinutes(Long timeTotalMinutes) {
+    public void setTimeTotalMinutes(Double timeTotalMinutes) {
         this.timeTotalMinutes = timeTotalMinutes;
     }
 

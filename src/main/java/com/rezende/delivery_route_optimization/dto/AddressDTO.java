@@ -1,5 +1,7 @@
 package com.rezende.delivery_route_optimization.dto;
 
+import com.rezende.delivery_route_optimization.entities.Address;
+
 public class AddressDTO {
 
     private String street;
@@ -11,7 +13,7 @@ public class AddressDTO {
 
     public AddressDTO() { }
 
-    public AddressDTO(
+    private AddressDTO(
             final String street,
             final String number,
             final String neighborhood,

@@ -10,13 +10,13 @@ public class RouteOptimized {
 
     public RouteOptimized() { }
 
-    public RouteOptimized(final Metric metric, final List<Address> addresses) {
-        this.metric = metric;
+    public RouteOptimized(final List<Address> addresses, final Metric metric) {
         this.addresses.addAll(addresses);
+        this.metric = metric;
     }
 
-    public static RouteOptimized from(final Metric metric, final List<Address> addresses) {
-        return new RouteOptimized(metric, addresses);
+    public static RouteOptimized from(final List<Address> addresses, final Metric metric) {
+        return new RouteOptimized(addresses, metric);
     }
 
     public List<Address> getAddresses() {

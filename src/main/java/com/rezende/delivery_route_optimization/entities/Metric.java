@@ -3,7 +3,7 @@ package com.rezende.delivery_route_optimization.entities;
 public class Metric {
 
     private Double distanceTotalKm;
-    private Long timeTotalMinutes;
+    private Double timeTotalMinutes;
     private String unitDistance;
     private String unitTime;
 
@@ -11,7 +11,7 @@ public class Metric {
 
     private Metric(
             final Double distanceTotalKm,
-            final Long timeTotalMinutes,
+            final Double timeTotalMinutes,
             final String unitDistance,
             final String unitTime
     ) {
@@ -23,7 +23,7 @@ public class Metric {
 
     public static Metric from(
             final Double distanceTotalKm,
-            final Long timeTotalMinutes,
+            final Double timeTotalMinutes,
             final String unitDistance,
             final String unitTime
     ) {
@@ -38,11 +38,11 @@ public class Metric {
         this.distanceTotalKm = distanceTotalKm;
     }
 
-    public Long getTimeTotalMinutes() {
+    public Double getTimeTotalMinutes() {
         return timeTotalMinutes;
     }
 
-    public void setTimeTotalMinutes(Long timeTotalMinutes) {
+    public void setTimeTotalMinutes(Double timeTotalMinutes) {
         this.timeTotalMinutes = timeTotalMinutes;
     }
 

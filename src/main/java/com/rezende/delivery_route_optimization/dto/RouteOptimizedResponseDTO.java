@@ -10,13 +10,13 @@ public class RouteOptimizedResponseDTO {
 
     public RouteOptimizedResponseDTO() { }
 
-    private RouteOptimizedResponseDTO(final MetricDTO metric, final List<AddressDTO> address) {
+    private RouteOptimizedResponseDTO(final List<AddressDTO> address, final MetricDTO metric) {
         this.metric = metric;
         this.routeOptimized.addAll(address);
     }
 
-    public static RouteOptimizedResponseDTO from(final MetricDTO metric, final List<AddressDTO> address) {
-        return new RouteOptimizedResponseDTO(metric, address);
+    public static RouteOptimizedResponseDTO from(final List<AddressDTO> address, final MetricDTO metric) {
+        return new RouteOptimizedResponseDTO(address, metric);
     }
 
     public List<AddressDTO> getRouteOptimized() {
