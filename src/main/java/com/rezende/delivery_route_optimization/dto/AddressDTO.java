@@ -4,6 +4,7 @@ import com.rezende.delivery_route_optimization.entities.Address;
 
 public class AddressDTO {
 
+    private String id;
     private String street;
     private String number;
     private String neighborhood;
@@ -14,17 +15,31 @@ public class AddressDTO {
     public AddressDTO() { }
 
     private AddressDTO(
+            final String id,
             final String street,
             final String number,
             final String neighborhood,
             final String city,
             final CoordinatesDTO coordinates
     ) {
+        this.id = id;
         this.street = street;
         this.number = number;
         this.neighborhood = neighborhood;
         this.city = city;
         this.coordinates = coordinates;
+    }
+
+    public static Address fromDtoToEntity(final AddressDTO dto) {
+        return Address.from(dto.getId(), dto.getStreet(), dto.getNumber(), dto.getNeighborhood(), dto.getCity());
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getStreet() {

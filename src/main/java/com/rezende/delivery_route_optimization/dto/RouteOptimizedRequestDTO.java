@@ -1,5 +1,7 @@
 package com.rezende.delivery_route_optimization.dto;
 
+import com.rezende.delivery_route_optimization.entities.Address;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,12 @@ public class RouteOptimizedRequestDTO {
         return new RouteOptimizedRequestDTO(origin, destinations, profile);
     }
 
-    public AddressDTO getOrigin() {
+    public AddressDTO getOriginDTO() {
         return origin;
+    }
+
+    public Address getOrigin() {
+        return Address.from(origin.getId(), origin.getStreet(), origin.getNumber(), origin.getNeighborhood(), origin.getCity());
     }
 
     public void setOrigin(AddressDTO origin) {

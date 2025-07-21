@@ -43,6 +43,10 @@ public class Address {
         return Address.from(address.id, address.street, address.number, address.neighborhood, address.city);
     }
 
+    public static Address of(final String id, final Address address) {
+        return Address.from(id, address.street, address.number, address.neighborhood, address.city);
+    }
+
     public String getId() {
         return id;
     }
