@@ -1,5 +1,7 @@
 package com.rezende.delivery_route_optimization.dto;
 
+import com.rezende.delivery_route_optimization.entities.Address;
+
 public class AddressRequestDTO {
 
     private String street;
@@ -14,6 +16,19 @@ public class AddressRequestDTO {
         this.number = number;
         this.neighborhood = neighborhood;
         this.city = city;
+    }
+
+    public static AddressRequestDTO from(
+            final String street,
+            final String number,
+            final String neighborhood,
+            final String city
+    ) {
+        return new AddressRequestDTO(street, number, neighborhood, city);
+    }
+
+    public static AddressRequestDTO of(final Address address) {
+        return AddressRequestDTO.from(address.getStreet(), address.getNumber(), address.getNeighborhood(), address.getCity());
     }
 
     public String getStreet() {

@@ -27,7 +27,7 @@ public class RouteOptimizedRequestDTO {
     }
 
     public Address getOrigin() {
-        return Address.from(origin.getId(), origin.getStreet(), origin.getNumber(), origin.getNeighborhood(), origin.getCity());
+        return Address.from(origin.getId(), origin.getStreet(), origin.getNumber(), origin.getNeighborhood(), origin.getCity(), origin.getCoordinates());
     }
 
     public void setOrigin(AddressDTO origin) {

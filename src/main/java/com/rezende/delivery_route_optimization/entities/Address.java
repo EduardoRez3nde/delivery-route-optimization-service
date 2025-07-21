@@ -1,5 +1,7 @@
 package com.rezende.delivery_route_optimization.entities;
 
+import com.rezende.delivery_route_optimization.dto.CoordinatesDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class Address {
     private String neighborhood;
     private String city;
 
-    private final List<Coordinates> coordinates = new ArrayList<>();
+    private Coordinates coordinates;
 
     public Address() { }
 
@@ -20,13 +22,15 @@ public class Address {
             final String street,
             final String number,
             final String neighborhood,
-            final String city
+            final String city,
+            final Coordinates coordinates
     ) {
         this.id = id;
         this.street = street;
         this.number = number;
         this.neighborhood = neighborhood;
         this.city = city;
+        this.coordinates = coordinates;
     }
 
     public static Address from(
@@ -34,17 +38,15 @@ public class Address {
             final String street,
             final String number,
             final String neighborhood,
-            final String city
-    ) {
-        return new Address(id, street, number, neighborhood, city);
-    }
+            final String city,
+            final Coordinates coordinates
 
-    public static Address of(final Address address) {
-        return Address.from(address.id, address.street, address.number, address.neighborhood, address.city);
+    ) {
+        return new Address(id, street, number, neighborhood, city, coordinates);
     }
 
     public static Address of(final String id, final Address address) {
-        return Address.from(id, address.street, address.number, address.neighborhood, address.city);
+        return Address.from(id, address.street, address.number, address.neighborhood, address.city, address.coordinates);
     }
 
     public String getId() {
@@ -83,8 +85,12 @@ public class Address {
         this.number = number;
     }
 
-    public List<Coordinates> getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.rezende.delivery_route_optimization.dto;
 
+import com.rezende.delivery_route_optimization.entities.Coordinates;
+
 public class LocationIQResponseDTO {
 
     private Double latitude;
@@ -7,9 +9,17 @@ public class LocationIQResponseDTO {
 
     public LocationIQResponseDTO() { }
 
-    public LocationIQResponseDTO(Double latitude, Double longitude) {
+    public LocationIQResponseDTO(final Double latitude, final Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public static LocationIQResponseDTO from(final Double latitude, final Double longitude) {
+        return new LocationIQResponseDTO(latitude, longitude);
+    }
+
+    public static Coordinates toEntity(final LocationIQResponseDTO dto) {
+        return Coordinates.from(dto.latitude, dto.longitude);
     }
 
     public Double getLongitude() {

@@ -1,19 +1,13 @@
-package com.rezende.delivery_route_optimization.service;
+package com.rezende.delivery_route_optimization.services;
 
-import com.rezende.delivery_route_optimization.dto.AddressDTO;
-import com.rezende.delivery_route_optimization.dto.MetricDTO;
-import com.rezende.delivery_route_optimization.dto.RouteOptimizedRequestDTO;
-import com.rezende.delivery_route_optimization.dto.RouteOptimizedResponseDTO;
+import com.rezende.delivery_route_optimization.dto.*;
 import com.rezende.delivery_route_optimization.entities.Address;
 import com.rezende.delivery_route_optimization.entities.Metric;
 import com.rezende.delivery_route_optimization.entities.RouteOptimized;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -35,11 +29,58 @@ public class RouteOptimizationService {
 
         final AtomicInteger id = new AtomicInteger(1);
         route.getDestinations().forEach(address ->
-                allAddresses.add(Address.of("client_" + id, AddressDTO.fromDtoToEntity(address))));
+                allAddresses.add(Address.of("client_" + id, AddressDTO.toEntity(address))));
 
+        final List<Mono<Address>> geocodingMono = allAddresses.stream()
+                .map(address -> geocodingService.geoCodeAddress(AddressRequestDTO.of(address))
+                        .map(coordinates -> {
+                            address.setCoordinates(LocationIQResponseDTO.toEntity(coordinates));
+                            return address;
+                        })
+                        .onErrorResume(error -> {
+                            System.err.println("Falha ao geocodificar " + address + ": " + error.getMessage());
+                            return Mono.empty();
+                        })
+                ).toList();
 
+        return Mono.zip(geocodingMono, results -> {
+            final List<Address> geocodedAddresses = (List<Address>) Arrays.asList(results).stream()
+                    .filter(result -> result instanceof Address)
+                    .map(result -> (Address) result)
+                    .toList();
+            if (geocodedAddresses.size() != geocodingMono.size())
+                throw new IllegalStateException("Nem todos os endereços puderam ser geocodificados. Verifique os endereços fornecidos.");
+            return geocodedAddresses;
+        })
+        .flatMap(geocodedAddresses -> {
+            final List<List<Double>> orsCoordinates = geocodedAddresses.stream()
+                    .map(coordinate -> List.of(coordinate.getCoordinates().getLongitude(), coordinate.getCoordinates().getLatitude()))
+                    .toList();
+            return orsMatrixService.getMatrix(route.getProfile(), orsCoordinates)
+                    .map(orsResponse -> {
+                        final Map<Address, Map<Address, Double>> distanceGraph = buildGraphFromOrsResponse(geocodedAddresses, orsResponse.getDistances());
+                        final Map<Address, Map<Address, Double>> durationGraph = buildGraphFromOrsResponse(geocodedAddresses, orsResponse.getDurations());
 
-        return null;
+                        final RouteOptimized optimizedRoute = applyNearestNeighborTSP(
+                                geocodedAddresses.getFirst(),
+                                geocodedAddresses.subList(1, geocodedAddresses.size()),
+                                distanceGraph,
+                                durationGraph
+                        );
+
+                        List<AddressDTO> addressDTOS = optimizedRoute.getAddresses().stream().
+                                map(AddressDTO::of)
+                                .toList();
+
+                        final MetricDTO metric = MetricDTO.from(optimizedRoute.getMetric());
+
+                        return RouteOptimizedResponseDTO.from(addressDTOS, metric);
+                    });
+        })
+        .onErrorResume(e -> {
+            System.err.println("Erro na otimização da rota: " + e.getMessage());
+            return Mono.error(new RuntimeException("Não foi possível otimizar a rota. Detalhes: " + e.getMessage(), e));
+        });
     }
 
     private Map<Address, Map<Address, Double>> buildGraphFromOrsResponse(final List<Address> addresses, final List<List<Double>> matrix) {

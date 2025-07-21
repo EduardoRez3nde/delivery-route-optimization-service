@@ -7,14 +7,14 @@ import java.util.List;
 
 public class OrsRequestDTO {
 
-    private final List<List<Coordinates>> locations = new ArrayList<>();
+    private final List<List<Double>> locations = new ArrayList<>();
     private List<String> metrics = new ArrayList<>();
     private String units;
 
     public OrsRequestDTO() { }
 
     private OrsRequestDTO(
-            final List<List<Coordinates>> locations,
+            final List<List<Double>> locations,
             final List<String> metrics,
             final String units
     ) {
@@ -24,14 +24,14 @@ public class OrsRequestDTO {
     }
 
     public static OrsRequestDTO from(
-            final List<List<Coordinates>> locations,
+            final List<List<Double>> locations,
             final List<String> metrics,
             final String units
     ) {
         return new OrsRequestDTO(locations, metrics, units);
     }
 
-    public List<List<Coordinates>> getLocations() {
+    public List<List<Double>> getLocations() {
         return locations;
     }
 

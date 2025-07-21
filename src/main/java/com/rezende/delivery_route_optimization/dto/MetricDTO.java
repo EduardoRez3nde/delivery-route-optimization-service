@@ -1,5 +1,8 @@
 package com.rezende.delivery_route_optimization.dto;
 
+import com.rezende.delivery_route_optimization.entities.Address;
+import com.rezende.delivery_route_optimization.entities.Metric;
+
 public class MetricDTO {
 
     private Double distanceTotalKm;
@@ -19,6 +22,10 @@ public class MetricDTO {
         this.timeTotalMinutes = timeTotalMinutes;
         this.unitDistance = unitDistance;
         this.unitTime = unitTime;
+    }
+
+    public static MetricDTO from(final Metric metric) {
+        return new MetricDTO(metric.getDistanceTotalKm(), metric.getTimeTotalMinutes(), metric.getUnitDistance(), metric.getUnitTime());
     }
 
     public Double getDistanceTotalKm() {

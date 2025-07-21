@@ -1,4 +1,4 @@
-package com.rezende.delivery_route_optimization.service;
+package com.rezende.delivery_route_optimization.services;
 
 import com.rezende.delivery_route_optimization.dto.AddressRequestDTO;
 import com.rezende.delivery_route_optimization.dto.LocationIQResponseDTO;

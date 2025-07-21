@@ -16,6 +16,10 @@ public class Coordinates {
         return new Coordinates(latitude, longitude);
     }
 
+    public static Coordinates of(final Coordinates coordinates) {
+        return Coordinates.from(coordinates.getLatitude(), coordinates.getLongitude());
+    }
+
     public Double getLatitude() {
         return latitude;
     }
