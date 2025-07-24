@@ -8,6 +8,7 @@ import com.rezende.delivery_route_optimization.services.exceptions.TooManyReques
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -36,6 +37,10 @@ public class GeocodingService {
         this.webClient = webClient.baseUrl(baseUrl).build();
     }
 
+    @Cacheable(
+            value = "geocoding",
+            key = "T(com.rezende.delivery_route_optimization.factories.Factory).toFormattedString(#addressDTO)"
+    )
     public Mono<LocationIQResponseDTO> geoCodeAddress(final AddressRequestDTO addressDTO) {
 
         final String addressFormatted = Factory.toFormattedString(addressDTO);

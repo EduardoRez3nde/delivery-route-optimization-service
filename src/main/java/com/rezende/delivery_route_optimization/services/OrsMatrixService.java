@@ -7,6 +7,7 @@ import com.rezende.delivery_route_optimization.services.exceptions.TooManyReques
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -38,6 +39,10 @@ public class OrsMatrixService {
         LOGGER.info("OrsMatrixService inicializado com base URL: {}", this.baseUrl);
     }
 
+    @Cacheable(
+            value = "coordinate-matrix",
+            key = "#profile + '-' + #coordinates"
+    )
     public Mono<OrsResponseDTO> getMatrix(final String profile, List<List<Double>> coordinates) {
 
         LOGGER.info("Iniciando requisição de matriz ORS para perfil '{}' com {} coordenadas.", profile, coordinates.size());
