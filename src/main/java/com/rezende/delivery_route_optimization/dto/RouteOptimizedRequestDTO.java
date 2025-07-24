@@ -1,40 +1,34 @@
 package com.rezende.delivery_route_optimization.dto;
 
 import com.rezende.delivery_route_optimization.entities.Address;
+import com.rezende.delivery_route_optimization.mapper.AddressMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RouteOptimizedRequestDTO {
 
-    private AddressDTO origin;
-    private final List<AddressDTO> destinations = new ArrayList<>();
+    private AddressRequestDTO origin;
+    private final List<AddressRequestDTO> destinations = new ArrayList<>();
     private String profile;
 
     public RouteOptimizedRequestDTO() { }
 
-    private RouteOptimizedRequestDTO(final AddressDTO origin, final List<AddressDTO> destinations, final String profile) {
+    private RouteOptimizedRequestDTO(final AddressRequestDTO origin, final List<AddressRequestDTO> destinations, final String profile) {
         this.origin = origin;
         this.destinations.addAll(destinations);
     }
 
-    public static RouteOptimizedRequestDTO from(final AddressDTO origin, final List<AddressDTO> destinations, final String profile) {
+    public static RouteOptimizedRequestDTO from(final AddressRequestDTO origin, final List<AddressRequestDTO> destinations, final String profile) {
         return new RouteOptimizedRequestDTO(origin, destinations, profile);
     }
 
-    public AddressDTO getOriginDTO() {
+    public AddressRequestDTO getOriginDTO() {
         return origin;
     }
 
-    public Address getOrigin() {
-        return Address.from(origin.getId(), origin.getStreet(), origin.getNumber(), origin.getNeighborhood(), origin.getCity(), origin.getCoordinates());
-    }
-
-    public void setOrigin(AddressDTO origin) {
-        this.origin = origin;
-    }
-
-    public List<AddressDTO> getDestinations() {
+    public List<AddressRequestDTO> getDestinations() {
         return destinations;
     }
 
@@ -44,5 +38,16 @@ public class RouteOptimizedRequestDTO {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public Address toOriginEntity(String id) {
+
+        Objects.requireNonNull(origin, "Origin AddressRequestDTO cannot be null.");
+
+        return AddressMapper.toAddressEntity(id, this.origin);
+    }
+
+    public void setOrigin(AddressRequestDTO origin) {
+        this.origin = origin;
     }
 }

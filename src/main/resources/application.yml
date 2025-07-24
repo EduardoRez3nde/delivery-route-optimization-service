@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: delivery-route-optimization-service
+
+server:
+  port: 8080
+
+geocoding:
+  locationIQ:
+    api:
+      key: ${LOCATIONIQ_API_KEY}
+      baseurl: https://us1.locationiq.com/v1/search
+  open-route-service:
+    api:
+      key: ${OPEN_ROUTE_SERVICE_API_KEY}
+      baseurl: https://api.openrouteservice.org/v2/matrix
+
+logging:
+  level:
+    root: INFO
+    com.rezende.delivery_route_optimization: DEBUG

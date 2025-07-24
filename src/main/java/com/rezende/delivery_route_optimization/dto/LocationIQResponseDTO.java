@@ -1,40 +1,39 @@
 package com.rezende.delivery_route_optimization.dto;
 
-import com.rezende.delivery_route_optimization.entities.Coordinates;
 
 public class LocationIQResponseDTO {
 
-    private Double latitude;
-    private Double longitude;
+    private String lat;
+    private String lon;
+    private String display_name;
 
-    public LocationIQResponseDTO() { }
-
-    public LocationIQResponseDTO(final Double latitude, final Double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public LocationIQResponseDTO(String lat, String lon, String display_name) {
+        this.lat = lat;
+        this.lon = lon;
+        this.display_name = display_name;
     }
 
-    public static LocationIQResponseDTO from(final Double latitude, final Double longitude) {
-        return new LocationIQResponseDTO(latitude, longitude);
+    public String getLat() {
+        return lat;
     }
 
-    public static Coordinates toEntity(final LocationIQResponseDTO dto) {
-        return Coordinates.from(dto.latitude, dto.longitude);
+    public void setLat(String lat) {
+        this.lat = lat;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public String getLon() {
+        return lon;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setLon(String lon) {
+        this.lon = lon;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public String getDisplay_name() {
+        return display_name;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public void setDisplay_name(String display_name) {
+        this.display_name = display_name;
     }
 }

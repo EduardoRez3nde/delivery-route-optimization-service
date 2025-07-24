@@ -30,12 +30,22 @@ public class AddressDTO {
         this.coordinates = coordinates;
     }
 
-    public static Address toEntity(final AddressDTO dto) {
-        return Address.from(dto.getId(), dto.getStreet(), dto.getNumber(), dto.getNeighborhood(), dto.getCity(), CoordinatesDTO.of(dto.coordinates));
-    }
-
-    public static AddressDTO of(final Address address) {
-        return new AddressDTO(address.getId(), address.getStreet(), address.getNumber(), address.getNeighborhood(), address.getCity(), co);
+    public static AddressDTO of(
+            final String id,
+            final String street,
+            final String number,
+            final String neighborhood,
+            final String city,
+            final CoordinatesDTO coordinatesDTO
+    ) {
+        return new AddressDTO(
+                id,
+                street,
+                number,
+                neighborhood,
+                city,
+                coordinatesDTO
+        );
     }
 
     public String getId() {

@@ -1,21 +1,41 @@
 package com.rezende.delivery_route_optimization.factories;
 
 import com.rezende.delivery_route_optimization.dto.AddressRequestDTO;
-
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Factory {
 
     public static <T extends AddressRequestDTO> String toFormattedString(final T value) {
-        StringBuilder sb = new StringBuilder();
+
+        StringJoiner joiner = new StringJoiner(", ");
 
         if (Objects.nonNull(value)) {
-            if (value.getStreet() != null) sb.append(value.getStreet()).append(" ");
-            if (value.getNumber() != null) sb.append(value.getNumber()).append(" ");
-            if (value.getNeighborhood() != null) sb.append(value.getNeighborhood()).append(" ");
-            if (value.getCity() != null) sb.append(value.getCity());
+
+            StringJoiner streetAndNumber = new StringJoiner(" ");
+
+            if (value.getStreet() != null && !value.getStreet().trim().isEmpty()) {
+                streetAndNumber.add(value.getStreet().trim());
+            }
+            if (value.getNumber() != null && !value.getNumber().trim().isEmpty()) {
+                streetAndNumber.add(value.getNumber().trim());
+            }
+            if (streetAndNumber.length() > 0) {
+                joiner.add(streetAndNumber.toString());
+            }
+
+            if (value.getNeighborhood() != null && !value.getNeighborhood().trim().isEmpty()) {
+                joiner.add(value.getNeighborhood().trim());
+            }
+
+            if (value.getCity() != null && !value.getCity().trim().isEmpty()) {
+                joiner.add(value.getCity().trim());
+            }
+
+            joiner.add("Amazonas");
+            joiner.add("Brasil");
         }
 
-        return sb.toString();
+        return joiner.toString();
     }
 }

@@ -1,34 +1,54 @@
 package com.rezende.delivery_route_optimization.dto;
 
 import com.rezende.delivery_route_optimization.entities.Address;
+import com.rezende.delivery_route_optimization.mapper.AddressMapper;
 
 public class AddressRequestDTO {
 
+    private String id;
     private String street;
     private String number;
     private String neighborhood;
     private String city;
+    private CoordinatesDTO coordinates;
 
-    public AddressRequestDTO() { }
-
-    public AddressRequestDTO(String street, String number, String neighborhood, String city) {
+    public AddressRequestDTO(
+            final String id,
+            final String street,
+            final String number,
+            final String neighborhood,
+            final String city,final CoordinatesDTO coordinates
+    ) {
+        this.id = id;
         this.street = street;
         this.number = number;
         this.neighborhood = neighborhood;
         this.city = city;
+        this.coordinates = coordinates;
     }
 
-    public static AddressRequestDTO from(
-            final String street,
-            final String number,
-            final String neighborhood,
-            final String city
-    ) {
-        return new AddressRequestDTO(street, number, neighborhood, city);
+    public static Address toEntity(AddressRequestDTO dto) {
+        return AddressMapper.toAddressEntity(dto.getId(), dto);
     }
 
-    public static AddressRequestDTO of(final Address address) {
-        return AddressRequestDTO.from(address.getStreet(), address.getNumber(), address.getNeighborhood(), address.getCity());
+    public static AddressRequestDTO of(Address entity) {
+
+        return new AddressRequestDTO(
+                entity.getId(),
+                entity.getStreet(),
+                entity.getNumber(),
+                entity.getNeighborhood(),
+                entity.getCity(),
+                AddressMapper.toCoordinatesDTO(entity.getCoordinates())
+        );
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getStreet() {
@@ -61,5 +81,13 @@ public class AddressRequestDTO {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public CoordinatesDTO getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(CoordinatesDTO coordinates) {
+        this.coordinates = coordinates;
     }
 }

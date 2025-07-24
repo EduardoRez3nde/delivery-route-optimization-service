@@ -1,7 +1,5 @@
 package com.rezende.delivery_route_optimization.dto;
 
-import com.rezende.delivery_route_optimization.entities.Coordinates;
-
 import java.util.ArrayList;
 import java.util.List;
 
