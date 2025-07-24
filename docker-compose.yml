@@ -1,0 +1,22 @@
+services:
+  redis-cache:
+    image: redis:8.0.3-alpine
+    container_name: redis-cache
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  optimization-service:
+    build: .
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - LOCATIONIQ_API_KEY=${LOCATIONIQ_API_KEY}
+      - OPEN_ROUTE_SERVICE_API_KEY=${OPEN_ROUTE_SERVICE_API_KEY}
+    depends_on:
+      redis-cache:
+        condition: service_healthy
