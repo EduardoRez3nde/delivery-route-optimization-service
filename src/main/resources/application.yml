@@ -5,11 +5,10 @@ spring:
     name: delivery-route-optimization-service
   data:
     redis:
-      host: localhost
+      host: redis-cache
       port: 6379
   cache:
     type: redis
-
 geocoding:
   locationIQ:
     api:
@@ -19,7 +18,6 @@ geocoding:
     api:
       key: ${OPEN_ROUTE_SERVICE_API_KEY}
       baseurl: https://api.openrouteservice.org/v2/matrix
-
 logging:
   level:
     root: INFO

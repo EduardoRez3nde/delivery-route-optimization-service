@@ -7,6 +7,8 @@ public class LocationIQResponseDTO {
     private String lon;
     private String display_name;
 
+    public LocationIQResponseDTO() { }
+
     public LocationIQResponseDTO(String lat, String lon, String display_name) {
         this.lat = lat;
         this.lon = lon;
