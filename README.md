@@ -151,6 +151,8 @@ Siga os passos abaixo para configurar e executar o projeto.
 
 ## Fluxo da Arquitetura
 
+![diagram](diagram.svg)
+
 O processo de uma requisição segue os seguintes passos:
 
 1.  **Controller:** O `RouteController` recebe a requisição HTTP POST.
